@@ -1,11 +1,17 @@
-<div *ngIf="category">
-  <h2><span>ID</span> {{category.id}}</h2>
+<div *ngIf="attributeValue">
+  <h2><span>ID</span> {{attributeValue.id}}</h2>
   <hr>
   <jhi-alert-error></jhi-alert-error>
   <dl class="row-md">
-    <dt><span>Name</span></dt>
+    <dt><span>Code</span></dt>
     <dd>
-      <span>{{category.name}}</span>
+      <span>{{attributeValue.code}}</span>
+    </dd>
+  </dl>
+  <dl class="row-md">
+    <dt><span>Value</span></dt>
+    <dd>
+      <span>{{attributeValue.value}}</span>
     </dd>
   </dl>
 
@@ -16,7 +22,7 @@
   </button>
 
   <button type="button"
-          [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
+          [routerLink]="['/', { outlets: { popup: 'attribute-value/'+ attributeValue.id + '/edit'} }]"
           replaceUrl="true"
           queryParamsHandling="merge"
           class="btn btn-primary">

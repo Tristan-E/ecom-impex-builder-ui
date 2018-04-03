@@ -6,42 +6,29 @@ import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager } from './../../shared/event-manager.service';
 
-import { Category } from './category.model';
-import { CategoryPopupService } from './category-popup.service';
-import { CategoryService } from './category.service';
-import { CategoryTypeService } from './category-type.service';
+import { AttributeValue } from './attribute-value.model';
+import { AttributeValuePopupService } from './attribute-value-popup.service';
+import { AttributeValueService } from './attribute-value.service';
 
 @Component({
-  selector: 'app-category-dialog',
-  templateUrl: './category-dialog.component.html'
+  selector: 'app-attribute-value-dialog',
+  templateUrl: './attribute-value-dialog.component.html'
 })
-export class CategoryDialogComponent implements OnInit {
+export class AttributeValueDialogComponent implements OnInit {
 
-  category: Category;
-  categoryTypes: string[];
+  attributeValue: AttributeValue;
   isSaving: boolean;
 
   constructor(
     public activeModal: NgbActiveModal,
     //private jhiAlertService: JhiAlertService,
-    private categoryService: CategoryService,
-    private categoryTypeService: CategoryTypeService,
+    private attributeValueService: AttributeValueService,
     private eventManager: EventManager
   ) {
   }
 
   ngOnInit() {
     this.isSaving = false;
-    this.loadCategoryTypes();
-  }
-
-  loadCategoryTypes() {
-    this.categoryTypeService.query().subscribe(
-      (res: HttpResponse<string[]>) => {
-        this.categoryTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
   }
 
   clear() {
@@ -50,22 +37,22 @@ export class CategoryDialogComponent implements OnInit {
 
   save() {
     this.isSaving = true;
-    if (this.category.id !== undefined) {
+    if (this.attributeValue.id !== undefined) {
       this.subscribeToSaveResponse(
-        this.categoryService.update(this.category));
+        this.attributeValueService.update(this.attributeValue));
     } else {
       this.subscribeToSaveResponse(
-        this.categoryService.create(this.category));
+        this.attributeValueService.create(this.attributeValue));
     }
   }
 
-  private subscribeToSaveResponse(result: Observable<HttpResponse<Category>>) {
-    result.subscribe((res: HttpResponse<Category>) =>
+  private subscribeToSaveResponse(result: Observable<HttpResponse<AttributeValue>>) {
+    result.subscribe((res: HttpResponse<AttributeValue>) =>
       this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
   }
 
-  private onSaveSuccess(result: Category) {
-    this.eventManager.broadcast({ name: 'categoryListModification', content: 'OK'});
+  private onSaveSuccess(result: AttributeValue) {
+    this.eventManager.broadcast({ name: 'attributeValueListModification', content: 'OK'});
     this.isSaving = false;
     this.activeModal.dismiss(result);
   }
@@ -92,26 +79,26 @@ export class CategoryDialogComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-category-popup',
+  selector: 'app-attribute-value-popup',
   template: ''
 })
-export class CategoryPopupComponent implements OnInit, OnDestroy {
+export class AttributeValuePopupComponent implements OnInit, OnDestroy {
 
   routeSub: any;
 
   constructor(
     private route: ActivatedRoute,
-    private categoryPopupService: CategoryPopupService
+    private attributeValuePopupService: AttributeValuePopupService
   ) {}
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe((params) => {
       if ( params['id'] ) {
-        this.categoryPopupService
-          .open(CategoryDialogComponent as Component, params['id']);
+        this.attributeValuePopupService
+          .open(AttributeValueDialogComponent as Component, params['id']);
       } else {
-        this.categoryPopupService
-          .open(CategoryDialogComponent as Component);
+        this.attributeValuePopupService
+          .open(AttributeValueDialogComponent as Component);
       }
     });
   }

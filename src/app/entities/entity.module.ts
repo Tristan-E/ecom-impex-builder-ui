@@ -1,10 +1,12 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppCategoryModule } from './category/category.module';
+import { AppAttributeValueModule } from './attribute-value/attribute-value.module';
 
 @NgModule({
   imports: [
-    AppCategoryModule
+    AppCategoryModule,
+    AppAttributeValueModule
   ],
   declarations: [],
   entryComponents: [],

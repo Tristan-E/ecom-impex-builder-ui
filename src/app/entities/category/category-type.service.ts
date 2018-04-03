@@ -11,7 +11,7 @@ export class CategoryTypeService {
   constructor(private http: HttpClient) {
   }
 
-  query(req?: any): Observable<HttpResponse<string>> {
+  query(req?: any): Observable<HttpResponse<string[]>> {
     return this.http.get<string[]>(this.resourceUrl, { observe: 'response' });
   }
 }
