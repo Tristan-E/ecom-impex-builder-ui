@@ -5,6 +5,7 @@ import { AppSharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppHomeModule } from './home/home.module';
 import { AppEntityModule } from './entities/entity.module';
+import { AppImpexBuilderModule } from './impex-builder/impex-builder.module';
 import { HttpClientModule } from '@angular/common/http';
 import {
   AppMainComponent,
@@ -20,7 +21,8 @@ import {
     AppSharedModule,
     AppHomeModule,
     AppEntityModule,
-    HttpClientModule,
+    AppImpexBuilderModule,
+    HttpClientModule
   ],
   declarations: [
     AppMainComponent,

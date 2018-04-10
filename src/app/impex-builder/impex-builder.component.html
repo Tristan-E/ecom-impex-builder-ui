@@ -1,0 +1,34 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+  <h4 id="myImpexBuilder">Generate Impexs</h4>
+
+    <div>
+      Choose the universe category you want to generate impexs for and the starting classification number.
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="form-group">
+      <label class="form-control-category" for="field_category">Category</label>
+      <select class="form-control" name="category_type" id="field_category" [(ngModel)]="impexBuilder.categoryId" required>
+        <option [ngValue]="undefined">Please select a category type</option>
+        <option *ngFor="let category of universeCategories" [value]="category.id">
+          {{category.code}} - {{category.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-category" for="field_classification_number">Name</label>
+      <input type="number" class="form-control" name="classification_number" id="field_classification_number" [(ngModel)]="impexBuilder.classificationStartNumber" required/>
+      <div [hidden]="!(editForm.controls.classification_number?.dirty && editForm.controls.classification_number?.invalid)">
+        <small class="form-text text-danger" [hidden]="!editForm.controls.classification_number?.errors?.required">
+          The classification number is required.
+        </small>
+      </div>
+    </div>
+
+  <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+    <span class="fa fa-save"></span>&nbsp;<span>Generate</span>
+  </button>
+</form>

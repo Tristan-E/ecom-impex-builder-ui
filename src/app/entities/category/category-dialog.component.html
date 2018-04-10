@@ -42,6 +42,49 @@
         </small>
       </div>
     </div>
+
+    <div class="form-group table-responsive">
+      <label class="form-control-category">Children</label>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><span>ID</span></th>
+          <th><span>Code</span></th>
+          <th><span>Name</span></th>
+          <th><span>Type</span></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let childCategory of category.children;trackBy: id">
+          <td>{{childCategory.id}}</td>
+          <td>{{childCategory.code}}</td>
+          <td>{{childCategory.name}}</td>
+          <td>{{childCategory.type}}</td>
+          <td class="text-right">
+            <div class="btn-group flex-btn-group-container">
+              <button (click)="removeCategoryFromChildren(childCategory)" class="btn btn-danger btn-sm">
+                <span class="fa fa-remove"></span>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <input type="text" class="form-control" placeholder="Search a category" matInput [formControl]="categoryControl">
+
+      <select [compareWith]="compareCategory" [(ngModel)] ="selectedCategory" name="selectedCategory">
+        <option *ngFor="let filteredCategory of filteredCategories | async" [ngValue]="filteredCategory">
+          {{filteredCategory.code}} - {{filteredCategory.name}}
+        </option>
+      </select>
+
+      <button type="button" (click)="addCategoryToChildren()">ADD</button>
+    </div>
+
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

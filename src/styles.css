@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+@import '~angular-tree-component/dist/angular-tree-component.css';
+
 .footer {
   border-top: 1px solid rgba(0, 0, 0, .125);
   background-color: #f8f9fa;

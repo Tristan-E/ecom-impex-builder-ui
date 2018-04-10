@@ -3,10 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home.component';
 import { HOME_ROUTE } from './home.route';
+import { TreeModule } from 'angular-tree-component';
+import { TreeService } from './tree.service';
 
 @NgModule({
   imports: [
-    RouterModule.forChild([ HOME_ROUTE ])
+    RouterModule.forChild([ HOME_ROUTE ]),
+    TreeModule
   ],
   declarations: [
     HomeComponent,
@@ -14,6 +17,7 @@ import { HOME_ROUTE } from './home.route';
   entryComponents: [
   ],
   providers: [
+    TreeService
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

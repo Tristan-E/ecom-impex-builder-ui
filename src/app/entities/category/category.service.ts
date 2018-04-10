@@ -29,6 +29,10 @@ export class CategoryService {
     return this.http.get<Category>(`${this.resourceUrl}/${id}`, { observe: 'response'});
   }
 
+  findByCategoryType(categoryType: string): Observable<HttpResponse<Category[]>> {
+    return this.http.get<Category[]>(`${this.resourceUrl}/type/${categoryType}`, { observe: 'response'});
+  }
+
   query(req?: any): Observable<HttpResponse<Category[]>> {
     const options = createRequestOption(req);
     return this.http.get<Category[]>(this.resourceUrl, { params: options, observe: 'response' });

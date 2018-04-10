@@ -5,7 +5,8 @@ export class Category implements BaseEntity{
     public id?: number,
     public name?: string,
     public code?: string,
-    public type?: string
+    public type?: string,
+    public children?: Category[]
   ) {
   }
 }

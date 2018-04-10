@@ -14,6 +14,7 @@ import { CategoryService } from './category.service';
 export class CategoryDetailComponent implements OnInit, OnDestroy {
 
   category: Category;
+
   private subscription: Subscription;
   private eventSubscriber: Subscription;
 
