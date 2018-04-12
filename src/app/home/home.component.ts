@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TreeService } from './tree.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { TreeNode } from './tree-node.model';
+import { Category } from '../entities/category/category.model';
+import { CategoryService } from '../entities/category/category.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -9,23 +12,51 @@ import { TreeNode } from './tree-node.model';
 })
 export class HomeComponent implements OnInit{
   nodes: TreeNode[];
-  options = {};
+  universeCategories: Category[];
+  options = {'allowDrag':'true'};
 
-  constructor(private treeService: TreeService) { }
+  universeCategoryId: number;
+  isSaving: boolean;
 
-  loadTree() {
-    this.treeService.findByCategory(1).subscribe(
-      (res: HttpResponse<TreeNode>) => {
-        this.nodes = [res.body];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
+  constructor(private treeService: TreeService, private categoryService: CategoryService) { }
+
+  loadUniverseCategories() {
+    // TODO USE CONSTANT
+    this.categoryService.findByCategoryType('PU')
+      .subscribe((categoryResponse: HttpResponse<Category[]>) => {
+        this.universeCategories = categoryResponse.body;
+      });
   }
+
   ngOnInit() {
-    this.loadTree();
+    this.loadUniverseCategories();
   }
 
   private onError(error) {
     alert('OOPS, implement real alerting');
+  }
+
+  save() {
+    this.isSaving = true;
+    this.subscribeToSaveResponse(
+      this.treeService.findByCategory(this.universeCategoryId)
+    );
+  }
+
+  private subscribeToSaveResponse(result: Observable<HttpResponse<TreeNode>>) {
+    result.subscribe(
+      (res: HttpResponse<TreeNode>) => this.onSaveSuccess(res),
+      (res: HttpErrorResponse) => this.onSaveError()
+    );
+  }
+
+  private onSaveSuccess(res: HttpResponse<TreeNode>) {
+    this.nodes = [res.body];
+    this.isSaving = false;
+  }
+
+  private onSaveError() {
+    alert('FAIL');
+    this.isSaving = false;
   }
 }

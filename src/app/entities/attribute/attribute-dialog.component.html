@@ -29,6 +29,11 @@
     </div>
 
     <div class="form-group">
+      <label class="form-control-attribute" for="field_attribute_external_id">External Id</label>
+      <input type="text" class="form-control" name="attribute_external_id" id="field_attribute_external_id" [(ngModel)]="attribute.externalId"/>
+    </div>
+
+    <div class="form-group">
       <label class="form-control-attribute" for="field_attribute_type">Type</label>
       <select class="form-control" name="attribute_type" id="field_attribute_type" [(ngModel)]="attribute.type" required>
         <option [ngValue]="undefined">Please select a attribute type</option>
@@ -41,6 +46,45 @@
           The attribute type is required.
         </small>
       </div>
+    </div>
+
+    <div class="form-group table-responsive">
+      <label class="form-control-category">Attribute values</label>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><span>ID</span></th>
+          <th><span>Code</span></th>
+          <th><span>Value</span></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let attributeValue of attribute.values;trackBy: id">
+          <td>{{attributeValue.id}}</td>
+          <td>{{attributeValue.code}}</td>
+          <td>{{attributeValue.value}}</td>
+          <td class="text-right">
+            <div class="btn-group flex-btn-group-container">
+              <button (click)="removeAttributeValue(attributeValue)" class="btn btn-danger btn-sm">
+                <span class="fa fa-remove"></span>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <input type="text" class="form-control" placeholder="Search an attribute value" matInput [formControl]="attributeValueControl">
+
+      <select [compareWith]="compareAttributeValue" [(ngModel)] ="selectedAttributeValue" name="selectedAttributeValue">
+        <option *ngFor="let filteredAttributeValue of filteredAttributeValues | async" [ngValue]="filteredAttributeValue">
+          {{filteredAttributeValue.code}} - {{filteredAttributeValue.value}}
+        </option>
+      </select>
+
+      <button type="button" (click)="addAttributeValue()">ADD</button>
     </div>
   </div>
   <div class="modal-footer">

@@ -5,10 +5,12 @@ import { HomeComponent } from './home.component';
 import { HOME_ROUTE } from './home.route';
 import { TreeModule } from 'angular-tree-component';
 import { TreeService } from './tree.service';
+import { AppSharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     RouterModule.forChild([ HOME_ROUTE ]),
+    AppSharedModule,
     TreeModule
   ],
   declarations: [

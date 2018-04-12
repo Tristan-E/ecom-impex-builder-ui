@@ -11,7 +11,7 @@
     <div class="form-group">
       <label class="form-control-category" for="field_category">Category</label>
       <select class="form-control" name="category_type" id="field_category" [(ngModel)]="impexBuilder.categoryId" required>
-        <option [ngValue]="undefined">Please select a category type</option>
+        <option [ngValue]="undefined">Please select a category</option>
         <option *ngFor="let category of universeCategories" [value]="category.id">
           {{category.code}} - {{category.name}}
         </option>
